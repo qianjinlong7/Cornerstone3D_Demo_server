@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/getPosition', (req, res) => {
-  const SQLstr = 'SELECT * from position order by positionNo;'
+  const SQLstr = 'SELECT * FROM position ORDER BY positionNo;'
 
   connection.query(SQLstr, (error, results) => {
     if (!error) {
@@ -22,8 +22,8 @@ router.get('/getPosition', (req, res) => {
 router.post('/getMedia', (req, res) => {
   const { curPage, pageSize } = req.body
   const low = (curPage - 1) * pageSize
-  const SQLstr1 = 'SELECT * from media order by mediaNo desc limit ' + low + "," + pageSize + ';'
-  const SQLstr2 = 'SELECT * from media;'
+  const SQLstr1 = 'SELECT * FROM media ORDER BY mediaNo DESC LIMIT ' + low + "," + pageSize + ';'
+  const SQLstr2 = 'SELECT * FROM media;'
   const data = []
 
   connection.query(SQLstr1, (error, results) => {
