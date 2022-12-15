@@ -44,4 +44,36 @@ router.post('/getMedia', (req, res) => {
 
 })
 
-module.exports = router;
+router.get('/getMediaList', (req, res) => {
+  const SQLstr = 'SELECT * FROM media;'
+
+  connection.query(SQLstr, (error, results) => {
+    if (!error) {
+      res.send(results)
+    } else {
+      console.log('test出错')
+      throw error
+    }
+  })
+})
+
+
+router.post('/updateMedia', (req, res) => {
+  const { mediaNo, title, content, author } = req.body
+  const SQLstr = 'UPDATE media SET ' + 'title="' + title + '", content="' + content + '", author="' + author + '" WHERE mediaNo="' + mediaNo + '";'
+
+  connection.query(SQLstr, (error, results) => {
+    if (error) throw error
+  })
+})
+
+router.post('/deleteMedia', (req, res) => {
+  const { mediaNo } = req.body
+  const SQLstr = 'DELETE FROM media WHERE mediaNo="' + mediaNo + '";'
+
+  connection.query(SQLstr, (error, results) => {
+    if (error) throw error
+  })
+})
+
+module.exports = router
