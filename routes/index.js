@@ -76,4 +76,24 @@ router.post('/deleteMedia', (req, res) => {
   })
 })
 
+router.post('/login', (req, res) => {
+  const { username, password } = req.body
+  const SQLstr = 'SELECT password FROM user WHERE username="' + username + '";'
+
+  connection.query(SQLstr, (error, results) => {
+    if (!error) {
+      if (results.length === 0) {
+        res.send({ flag: 'failure', content: '该用户不存在' })
+      } else if (results[0].password === password) {
+        res.send({ flag: 'success', content: '登录成功' })
+      } else {
+        console.log(results)
+        res.send({ flag: 'failure', content: '密码错误' })
+      }
+    } else {
+      throw error
+    }
+  })
+})
+
 module.exports = router
